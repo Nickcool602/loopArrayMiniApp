@@ -9,6 +9,8 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    @IBOutlet weak var errorExistsLabel: UILabel!
+    
     @IBOutlet weak var songField: UITextField!
     
     @IBOutlet weak var listView: UITextView!
@@ -17,7 +19,9 @@ class ViewController: UIViewController {
     
     var ratings : [Int] = []
     
-    var rating = 0
+    var rating = 1
+    
+    var position = 0
     
     var text = ""
     
@@ -25,14 +29,16 @@ class ViewController: UIViewController {
         text = ""
         listView.text = text
         for song in songs {
-            text = "\(listView.text!)" + " \n "  + "\(song)"
+            position = songs.firstIndex(of: song)!
+            text = "\(String(describing: listView.text ?? ""))" + " \n "  + "\(song) - \(ratings[songs.firstIndex(of: song)!]) stars"
             listView.text = text
         }
+        print(rating)
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        errorExistsLabel.isHidden = true
     }
 
     @IBAction func ratingSegment(_ sender: Any) {
@@ -52,18 +58,53 @@ class ViewController: UIViewController {
         else if choice == 4 {
             rating = 5
         }
+        print(rating)
     }
     
     @IBAction func addButton(_ sender: Any) {
-        songs.insert(songField.text!, at: songs.count)
-        ratings.insert(rating, at: ratings.count)
-        update()
+        if songs.contains(songField.text ?? "") == false {
+            if songField.text != "" {
+                songs.insert(songField.text!, at: songs.count)
+                ratings.insert(rating, at: ratings.count)
+                update()
+                errorExistsLabel.isHidden = true
+            }
+            errorExistsLabel.isHidden = true
+            errorExistsLabel.text = "Error: Empty field!"
+        }
+        else {
+            errorExistsLabel.isHidden = false
+            errorExistsLabel.text = "Error: Media already exists!"
+        }
+        songField.text = ""
     }
     
     @IBAction func removeButton(_ sender: Any) {
-        ratings.remove(at: songs.firstIndex(of: songField.text!)!)
-        songs.remove(at: songs.firstIndex(of: songField.text!)!)
+        if songs.count > 0 {
+            if songs.contains(songField.text ?? "") {
+                ratings.remove(at: songs.firstIndex(of: songField.text ?? "")!)
+                songs.remove(at: songs.firstIndex(of: songField.text ?? "")!)
+                errorExistsLabel.isHidden = true
+            }
+            else {
+                errorExistsLabel.isHidden = false
+                errorExistsLabel.text = "Error: Media doesn't exist!"
+            }
+        }
+        else {
+            errorExistsLabel.isHidden = false
+            errorExistsLabel.text = "Error: Empty list!"
+        }
         update()
+        songField.text = ""
+    }
+    
+    @IBAction func resetButton(_ sender: Any) {
+        songs = []
+        ratings = []
+        update()
+        errorExistsLabel.isHidden = false
+        errorExistsLabel.text = "Reset complete."
     }
 
 }
