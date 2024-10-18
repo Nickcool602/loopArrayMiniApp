@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var errorExistsLabel: UILabel!
     
@@ -25,13 +25,17 @@ class ViewController: UIViewController {
     
     var text = ""
     
+    var filter = 1
+    
     func update() {
         text = ""
         listView.text = text
         for song in songs {
-            position = songs.firstIndex(of: song)!
-            text = "\(String(describing: listView.text ?? ""))" + " \n "  + "\(song) - \(ratings[songs.firstIndex(of: song)!]) stars"
-            listView.text = text
+            if ratings[songs.firstIndex(of: song)!] >= filter {
+                position = songs.firstIndex(of: song)!
+                text = "\(String(describing: listView.text ?? ""))" + " \n "  + "\(song) - \(ratings[songs.firstIndex(of: song)!]) stars"
+                listView.text = text
+            }
         }
         print(rating)
     }
@@ -77,6 +81,7 @@ class ViewController: UIViewController {
             errorExistsLabel.text = "Error: Media already exists!"
         }
         songField.text = ""
+        songField.resignFirstResponder()
     }
     
     @IBAction func removeButton(_ sender: Any) {
@@ -97,6 +102,7 @@ class ViewController: UIViewController {
         }
         update()
         songField.text = ""
+        songField.resignFirstResponder()
     }
     
     @IBAction func resetButton(_ sender: Any) {
@@ -105,7 +111,17 @@ class ViewController: UIViewController {
         update()
         errorExistsLabel.isHidden = false
         errorExistsLabel.text = "Reset complete."
+        songField.resignFirstResponder()
+    }
+    
+    @IBAction func filterSegment(_ sender: Any) {
+        filter = (sender as AnyObject).selectedSegmentIndex + 1
+        update()
     }
 
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        return true
+    }
+    
 }
 
