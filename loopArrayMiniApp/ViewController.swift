@@ -15,6 +15,10 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var listView: UITextView!
     
+    @IBOutlet weak var filterSegmentOutlet: UISegmentedControl!
+    
+    @IBOutlet weak var filterHiddenOutlet: UIButton!
+    
     var songs : [String] = []
     
     var ratings : [Int] = []
@@ -26,6 +30,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
     var text = ""
     
     var filter = 1
+    
+    var filterHidden = true
     
     func update() {
         text = ""
@@ -43,6 +49,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         errorExistsLabel.isHidden = true
+        filterSegmentOutlet.isHidden = true
     }
 
     @IBAction func ratingSegment(_ sender: Any) {
@@ -121,6 +128,19 @@ class ViewController: UIViewController, UITextFieldDelegate {
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         return true
+    }
+    
+    @IBAction func filterHideButton(_ sender: Any) {
+        if filterHidden == true {
+            filterHidden = false
+            filterSegmentOutlet.isHidden = false
+            filterHiddenOutlet.setTitle("Close Filter", for: .normal)
+        }
+        else {
+            filterHidden = true
+            filterSegmentOutlet.isHidden = true
+            filterHiddenOutlet.setTitle("Open Filter", for: .normal)
+        }
     }
     
 }
