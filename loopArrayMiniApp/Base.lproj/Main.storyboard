@@ -92,7 +92,7 @@
                                 </connections>
                             </segmentedControl>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vyD-da-Z7r">
-                                <rect key="frame" x="80" y="783" width="233" height="35"/>
+                                <rect key="frame" x="81" y="783" width="233" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="RESET"/>
@@ -139,7 +139,7 @@
                         <outlet property="filterHiddenOutlet" destination="wBJ-9S-Uvg" id="RoC-5x-M3h"/>
                         <outlet property="filterSegmentOutlet" destination="QLR-W6-baE" id="ZMF-jQ-b9p"/>
                         <outlet property="listView" destination="H7F-oL-6jk" id="BxZ-WY-kpt"/>
-                        <outlet property="songField" destination="Z1q-8r-z2h" id="i7F-Wa-iFr"/>
+                        <outlet property="titleField" destination="Z1q-8r-z2h" id="Toa-ig-Ut9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

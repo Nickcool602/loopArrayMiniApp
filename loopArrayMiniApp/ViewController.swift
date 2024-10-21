@@ -11,7 +11,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var errorExistsLabel: UILabel!
     
-    @IBOutlet weak var songField: UITextField!
+    @IBOutlet weak var titleField: UITextField!
     
     @IBOutlet weak var listView: UITextView!
     
@@ -19,7 +19,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var filterHiddenOutlet: UIButton!
     
-    var songs : [String] = []
+    var titles : [String] = []
     
     var ratings : [Int] = []
     
@@ -36,10 +36,10 @@ class ViewController: UIViewController, UITextFieldDelegate {
     func update() {
         text = ""
         listView.text = text
-        for song in songs {
-            if ratings[songs.firstIndex(of: song)!] >= filter {
-                position = songs.firstIndex(of: song)!
-                text = "\(String(describing: listView.text ?? ""))" + " \n "  + "\(song) - \(ratings[songs.firstIndex(of: song)!]) stars"
+        for title in titles {
+            if ratings[titles.firstIndex(of: title)!] >= filter {
+                position = titles.firstIndex(of: title)!
+                text = "\(String(describing: listView.text ?? ""))" + " \n "  + "\(title) - \(ratings[titles.firstIndex(of: title)!]) stars"
                 listView.text = text
             }
         }
@@ -73,9 +73,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func addButton(_ sender: Any) {
-        if songs.contains(songField.text ?? "") == false {
-            if songField.text != "" {
-                songs.insert(songField.text!, at: songs.count)
+        if titles.contains(titleField.text ?? "") == false {
+            if titleField.text != "" {
+                titles.insert(titleField.text!, at: titles.count)
                 ratings.insert(rating, at: ratings.count)
                 update()
                 errorExistsLabel.isHidden = true
@@ -87,15 +87,15 @@ class ViewController: UIViewController, UITextFieldDelegate {
             errorExistsLabel.isHidden = false
             errorExistsLabel.text = "Error: Media already exists!"
         }
-        songField.text = ""
-        songField.resignFirstResponder()
+        titleField.text = ""
+        titleField.resignFirstResponder()
     }
     
     @IBAction func removeButton(_ sender: Any) {
-        if songs.count > 0 {
-            if songs.contains(songField.text ?? "") {
-                ratings.remove(at: songs.firstIndex(of: songField.text ?? "")!)
-                songs.remove(at: songs.firstIndex(of: songField.text ?? "")!)
+        if titles.count > 0 {
+            if titles.contains(titleField.text ?? "") {
+                ratings.remove(at: titles.firstIndex(of: titleField.text ?? "")!)
+                titles.remove(at: titles.firstIndex(of: titleField.text ?? "")!)
                 errorExistsLabel.isHidden = true
             }
             else {
@@ -108,17 +108,17 @@ class ViewController: UIViewController, UITextFieldDelegate {
             errorExistsLabel.text = "Error: Empty list!"
         }
         update()
-        songField.text = ""
-        songField.resignFirstResponder()
+        titleField.text = ""
+        titleField.resignFirstResponder()
     }
     
     @IBAction func resetButton(_ sender: Any) {
-        songs = []
+        titles = []
         ratings = []
         update()
         errorExistsLabel.isHidden = false
         errorExistsLabel.text = "Reset complete."
-        songField.resignFirstResponder()
+        titleField.resignFirstResponder()
     }
     
     @IBAction func filterSegment(_ sender: Any) {
@@ -127,6 +127,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        titleField.resignFirstResponder()
         return true
     }
     
